@@ -30,6 +30,7 @@ app.use(
 );
 
 app.post('/auth/register', controller.register);
+app.post('/auth/login', controller.login);
 
 
 app.listen(SERVER_PORT, () => {
