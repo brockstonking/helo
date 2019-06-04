@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Nav from './../Nav/Nav';
 import './Dashboard.css';
+import { connect } from 'react-redux';
+import axios from 'axios';
+
 
 class Dashboard extends Component {
     constructor(props){
@@ -8,10 +11,12 @@ class Dashboard extends Component {
 
         this.state = {
             checkBox: true,
+            searchInput: '',
             posts: []
         }
 
         this.checkTheBox = this.checkTheBox.bind( this );
+        this.getPosts = this.getPosts.bind( this );
     }
 
     async checkTheBox(){
@@ -24,7 +29,15 @@ class Dashboard extends Component {
                 checkBox: true
             })
         }
-        console.log(this.state.checkBox)
+    }
+
+    getPosts(){
+        axios.get(`/posts/all/${ this.props.id }?userposts=${ this.state.checkBox }&search=${ this.state.searchInput }`)
+        .then( results => {
+            this.setState({
+                posts: results
+            })
+        })
     }
 
     render(){
@@ -69,4 +82,9 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+    const { username, profilePicture, id } = state;
+    return { username: username, profile_picture: profilePicture, id: id }
+}
+
+export default connect(mapStateToProps)(Dashboard);

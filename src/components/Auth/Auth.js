@@ -34,8 +34,8 @@ class Auth extends Component {
     register(){
         axios.post('http://localhost:3001/auth/register', { username: this.state.inputEmail, password: this.state.inputPassword })
         .then( results => {
-            const { id, username, profile_picture } = results.data[0]
-            this.props.whichUserIsIt(id, username, profile_picture);
+            const { user_id, username, profile_picture } = results.data[0]
+            this.props.whichUserIsIt(user_id, username, profile_picture);
             this.setState({
                 inputEmail: '',
                 inputPassword: ''
@@ -48,8 +48,8 @@ class Auth extends Component {
     login(){
                 axios.post('http://localhost:3001/auth/login', { username: this.state.inputEmail, password: this.state.inputPassword })
                 .then( results => {
-                const { id, username, profile_picture } = results.data[0]
-                this.props.whichUserIsIt(id, username, profile_picture);
+                const { user_id, username, profile_picture } = results.data[0]
+                this.props.whichUserIsIt(user_id, username, profile_picture);
                 this.setState({
                     inputEmail: '',
                     inputPassword: ''

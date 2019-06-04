@@ -21,18 +21,41 @@ module.exports = {
     getAllPosts: async (req, res, next) => {
         const { userposts, search } = req.query;
         const { user_id } = req.params;
+        const sqlSearch = '%' + search + '%'
         const dbInstance = req.app.get('db');
-            if (userposts && search) {
-                dbInstance.search_all_posts(search)
+            if (userposts === 'true' && search) {
+                dbInstance.search_all_posts(sqlSearch)
                 .then( results => {
                     res.status(200).send(results)
+                })
+                .catch (err => {
+                    res.status(500).send(err)
                 })
             } else if (userposts === 'false' && search === '') {
                 dbInstance.get_all_not_user(user_id)
                 .then( results => {
                     res.status(200).send(results)
                 })
-            }
+                .catch (err => {
+                    res.status(500).send(err)
+                })
+            } else if (userposts === 'false' && search) {
+                dbInstance.search_not_user([sqlSearch, user_id])
+                .then( results => {
+                    res.status(200).send(results)
+                })
+                .catch (err => {
+                    res.status(500).send(err)
+                })
+            } else if (userposts === 'true' && search === '') {
+                dbInstance.get_posts()
+                .then( results => {
+                    res.status(200).send(results)
+                })
+                .catch (err => {
+                    res.status(500).send(err)
+                })
+            }  
     }
 
     }

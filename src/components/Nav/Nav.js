@@ -31,8 +31,8 @@ class Nav extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { username, profilePicture } = state;
-    return { username: username, profile_picture: profilePicture }
+    const { username, profilePicture, id } = state;
+    return { username: username, profile_picture: profilePicture, id: id }
 }
 
 export default connect(mapStateToProps)(Nav);
