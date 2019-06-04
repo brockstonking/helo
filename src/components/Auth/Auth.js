@@ -75,11 +75,11 @@ class Auth extends Component {
                     <div className='inputDiv'>
                         <div className='usernameReq'>
                             <p>Username:</p>
-                            <input maxlength='11' className='inputBoxes usernameInput' value={ this.state.inputEmail } onChange={ e => this.updateEmailInput(e.target.value) }></input>
+                            <input maxLength='11' className='inputBoxes usernameInput' value={ this.state.inputEmail } onChange={ e => this.updateEmailInput(e.target.value) }></input>
                         </div>
                         <div className='passwordReq'>
                             <p>Password:</p>
-                            <input maxlength='11' className='inputBoxes passwordInput' value={ this.state.inputPassword } onChange={ e => this.updatePasswordInput( e.target.value ) }></input>
+                            <input type='password' maxLength='11' className='inputBoxes passwordInput' value={ this.state.inputPassword } onChange={ e => this.updatePasswordInput( e.target.value ) }></input>
                         </div>
                     </div>
                     <div className='buttonDiv'>
