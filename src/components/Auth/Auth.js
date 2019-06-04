@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Nav from './../Nav/Nav';
 import axios from 'axios';
 import './Auth.css'
+import { connect } from 'react-redux';
+import { whichUser } from './../../ducks/reducer';
 
 class Auth extends Component {
     constructor(props){
@@ -21,24 +23,28 @@ class Auth extends Component {
         this.setState({
             inputEmail: val
         })
-        console.log(this.state.inputEmail)
     }
     
     updatePasswordInput(val){
         this.setState({
             inputPassword: val
         })
-        console.log(this.state.inputPassword)
     }
 
     register(){
         axios.post('http://localhost:3001/auth/register', { username: this.state.inputEmail, password: this.state.inputPassword })
         .then( results => {
+            const { id, username, profile_picture } = results.data[0]
+            this.props.whichUserIsIt(id, username, profile_picture);
             this.setState({
                 inputEmail: '',
                 inputPassword: ''
             })
-            this.props.history.push('/dashboard')
+            if (this.state.inputEmail && this.state.inputPassword) {
+                this.props.history.push('/dashboard')
+            } else {
+                window.alert("Please enter both a username and password.")
+            }
         })
         
     }
@@ -46,11 +52,17 @@ class Auth extends Component {
     login(){
         axios.post('http://localhost:3001/auth/login', { username: this.state.inputEmail, password: this.state.inputPassword })
         .then( results => {
+            const { id, username, profile_picture } = results.data[0]
+            this.props.whichUserIsIt(id, username, profile_picture);
             this.setState({
                 inputEmail: '',
                 inputPassword: ''
             })
-            this.props.history.push('/dashboard')
+            if (this.state.inputEmail && this.state.inputPassword) {
+                this.props.history.push('/dashboard')
+            } else {
+                window.alert("Please enter both a username and password.")
+            }
         })
     }
 
@@ -69,11 +81,11 @@ class Auth extends Component {
                     <div className='inputDiv'>
                         <div className='usernameReq'>
                             <p>Username:</p>
-                            <input className='inputBoxes usernameInput' value={ this.state.inputEmail } onChange={ e => this.updateEmailInput(e.target.value) }></input>
+                            <input maxlength='11' className='inputBoxes usernameInput' value={ this.state.inputEmail } onChange={ e => this.updateEmailInput(e.target.value) }></input>
                         </div>
                         <div className='passwordReq'>
                             <p>Password:</p>
-                            <input className='inputBoxes passwordInput' value={ this.state.inputPassword } onChange={ e => this.updatePasswordInput( e.target.value ) }></input>
+                            <input maxlength='11' className='inputBoxes passwordInput' value={ this.state.inputPassword } onChange={ e => this.updatePasswordInput( e.target.value ) }></input>
                         </div>
                     </div>
                     <div className='buttonDiv'>
@@ -86,4 +98,8 @@ class Auth extends Component {
     }
 }
 
-export default Auth;
+const mapDispatchToProps = {
+    whichUserIsIt: whichUser
+}
+
+export default connect(null, mapDispatchToProps)(Auth);

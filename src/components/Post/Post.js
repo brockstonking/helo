@@ -7,8 +7,8 @@ class Post extends Component {
 
         return (
             <div>
-                Post
                 { navbar }
+                Post
             </div>
         )
     }

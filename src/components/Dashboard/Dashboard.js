@@ -7,8 +7,9 @@ class Dashboard extends Component {
 
         return (
             <div>
-                Dashboard
+                
                 { navbar }
+                Dashboard
             </div>
         )
     }

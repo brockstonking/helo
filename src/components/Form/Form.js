@@ -7,8 +7,9 @@ class Form extends Component {
 
         return (
             <div>
-                Form
+                
                 { navbar }
+                Form
             </div>
         )
     }
