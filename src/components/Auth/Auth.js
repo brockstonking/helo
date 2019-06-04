@@ -40,30 +40,24 @@ class Auth extends Component {
                 inputEmail: '',
                 inputPassword: ''
             })
-            if (this.state.inputEmail && this.state.inputPassword) {
-                this.props.history.push('/dashboard')
-            } else {
-                window.alert("Please enter both a username and password.")
-            }
+            this.props.history.push('/dashboard')
         })
         
     }
 
     login(){
-        axios.post('http://localhost:3001/auth/login', { username: this.state.inputEmail, password: this.state.inputPassword })
-        .then( results => {
-            const { id, username, profile_picture } = results.data[0]
-            this.props.whichUserIsIt(id, username, profile_picture);
-            this.setState({
-                inputEmail: '',
-                inputPassword: ''
-            })
-            if (this.state.inputEmail && this.state.inputPassword) {
+                axios.post('http://localhost:3001/auth/login', { username: this.state.inputEmail, password: this.state.inputPassword })
+                .then( results => {
+                const { id, username, profile_picture } = results.data[0]
+                this.props.whichUserIsIt(id, username, profile_picture);
+                this.setState({
+                    inputEmail: '',
+                    inputPassword: ''
+                })
                 this.props.history.push('/dashboard')
-            } else {
-                window.alert("Please enter both a username and password.")
-            }
-        })
+                })
+            
+        
     }
 
     render(){
