@@ -3,6 +3,7 @@ import Nav from './../Nav/Nav';
 import './Dashboard.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import Post from './Post/Post';
 
 
 class Dashboard extends Component {
@@ -17,6 +18,12 @@ class Dashboard extends Component {
 
         this.checkTheBox = this.checkTheBox.bind( this );
         this.getPosts = this.getPosts.bind( this );
+        this.updateSearch = this.updateSearch.bind( this );
+        this.componentDidMount = this.componentDidMount.bind( this );
+    }
+
+    async componentDidMount(){
+        await this.getPosts();
     }
 
     async checkTheBox(){
@@ -29,28 +36,29 @@ class Dashboard extends Component {
                 checkBox: true
             })
         }
+        await this.getPosts();
+        console.log(this.state.posts)
     }
 
-    getPosts(){
-        axios.get(`/posts/all/${ this.props.id }?userposts=${ this.state.checkBox }&search=${ this.state.searchInput }`)
+    async getPosts(){
+        await axios.get(`/posts/all/${ this.props.id }?userposts=${ this.state.checkBox }&search=${ this.state.searchInput }`)
         .then( results => {
             this.setState({
-                posts: results
+                posts: results.data
             })
+        })
+    }
+
+    updateSearch(val){
+        this.setState({
+            searchInput: val
         })
     }
 
     render(){
         const navbar = this.props.location.pathname !== '/' ? <Nav /> : <div></div>
-        const posts = this.state.posts.map( e => {
-            const post =  
-            <div>
-                <h1>{ e.title }</h1>
-                <p>{ e.username }</p>
-                <img src={ e.profile_picture } alt='' />
-            </div>
-
-            return post
+        const posts = this.state.posts.map( (e, i) => {
+            return <Post key={ i } index={ i } title={ e.title } username={ e.username } profile_picture={ e.profile_picture }/>
         })
 
         return (
@@ -59,7 +67,7 @@ class Dashboard extends Component {
                 <div className='dashboard'>
                     <div className='searchAndReset'>
                         <div>
-                            <input className='searchBox' placeholder='Search by Title' />
+                            <input value={ this.state.searchInput } onChange={ e => this.updateSearch( e.target.value ) }className='searchBox' placeholder='Search by Title' />
                         </div>
                         <div>
                             <img className='searchIcon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAAXNSR0IArs4c6QAAAeJJREFUSA2tlM0rBGEcx3dWEREp4oBVrvsXLJEoTsR/QDk6ydt1E2ccuIniKGeEi4MLbY6SAzaRUt5C1uer9pkZM7PM2m99muf5vT0zz/yeJxLxUSaTKYch2IJzeIF7SMECdPikeUzWTwuJI9iSUA0HcAhpKIVm6IEWkG/UsqwUz9yiaAmswScsQ31QBr4uOIEnGAyKM3aCVFjB/caYY0CcXmYVPqA7MBTnCOiN/1Q4W4h4C/Rf9D9qs3bzxKifdwNLxhhiQF4V3MGiJw2juuIN6jzOPxrInYRnKHOlYNBnbbuMISfkx0Dqc6ZGmcRB7Za3aMcLkq9BtYxUXC2nPv6vVMPVvir+Ajog/5VqvDqLqPgVxJzGsGP2uoicBlAtIxXfh15jyW+QIK0CdCXYYtV2kDpta7gRuRtwBpYnE+MeHEOxx/mLgZxW0Oke9g3FEYdHWAHv6r5ZkQixTZCGXdAW+wvnALzDJlT6R9lWYhKgwtKM7QkYEaSrVJfQLYxDozOUeRTaYB20FTuQBGnKGes7JqgG5kHXr3QJR3AKDyDp5+lO+t4KnhMguRYI3F8CdSh0T+tI6+TpgKiP1W7HHPkMTyPiJ5jMwTS+WeMo1EALgOT6gkLVVwdlF9CXFF4sMAapL60vtT4ftHlFAAAAAElFTkSuQmCC' alt='' />
@@ -72,10 +80,9 @@ class Dashboard extends Component {
                             <label htmlFor='myPosts'>My Posts</label>
                         </div>
                     </div>
-                    
-                </div>
-                <div>
-                    { posts }
+                    <div>
+                        { posts }
+                    </div>
                 </div>
             </div>
         )
