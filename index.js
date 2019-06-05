@@ -33,6 +33,7 @@ app.post('/auth/register', controller.register);
 app.post('/auth/login', controller.login);
 app.get('/posts/all/:user_id', controller.getAllPosts);
 app.get('/posts/:postId', controller.getSinglePost);
+app.post('/posts/create/:userId', controller.createPost);
 
 
 app.listen(SERVER_PORT, () => {

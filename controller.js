@@ -67,5 +67,14 @@ module.exports = {
         .catch( err => {
             res.status(500).send(err)
         })
+    },
+    createPost: async (req, res, next) => {
+        const { userId } = req.params;
+        const { title, image, content } = req.body;
+        const dbInstance = req.app.get('db');
+        dbInstance.create_post([title, image, content, userId])
+        .then( () => {
+            res.status(200).send('Post has been added.')
+        })
     }
 }
