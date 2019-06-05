@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Post.css';
 
 class Post extends Component {
     constructor(props){
@@ -7,10 +8,14 @@ class Post extends Component {
 
     render(){
         return (
-            <div>
-                <h1>{ this.props.title }</h1>
-                <p>{ this.props.username }</p>
-                <img src={ this.props.profile_picture } alt='' />
+            <div className='postDisplay'>
+                <div className='theInside'>
+                    <p className='postTitle'>{ this.props.title }</p>
+                    <div className='userDisplay'>
+                        <p>By { this.props.username }</p>
+                        <img className='userImg' src={ this.props.profile_picture } alt='' />
+                    </div>
+                </div>
             </div>
         )
     }

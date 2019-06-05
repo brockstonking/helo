@@ -1,5 +1,6 @@
 .dashboard {
-    padding-left: 100px;
+    width: 70%;
+    margin-left: 10%;
 }
 
 .searchIcon {
@@ -7,11 +8,7 @@
     width: 25px;
     background-color: #ff9770;
     border-radius: 2px;
-    padding: 2px;
-}
-
-.searchAndReset {
-    display: flex;
+    padding: 1px;
 }
 
 .resetButton {
@@ -19,10 +16,36 @@
     border-radius: 1px;
     color: #fff;
     border: none;
-    height: 25px;
+    height: 27px;
     padding: 5px 10px;
 }
 
 .searchBox {
+    height: 21px;
+    width: 90%;
+}
+
+.searchAndReset {
+    border-radius: 2px;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.2);
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    align-items: center;
+}
+
+.searchBoxAndButton {
+    display: flex;
     height: 25px;
+    width: 75%;
+}
+
+.displayPosts {
+    border-radius: 2px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.2);
 }
