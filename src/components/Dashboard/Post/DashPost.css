@@ -28,6 +28,11 @@
     margin: 0 auto;
 }
 
-.postTitle {
+.postMapTitle {
     font-size: 30px;
+}
+
+.links {
+    text-decoration: none;
+    color: black;
 }

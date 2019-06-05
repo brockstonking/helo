@@ -32,8 +32,9 @@ app.use(
 app.post('/auth/register', controller.register);
 app.post('/auth/login', controller.login);
 app.get('/posts/all/:user_id', controller.getAllPosts);
+app.get('/posts/:postId', controller.getSinglePost);
 
 
 app.listen(SERVER_PORT, () => {
     console.log(`Listening in on port ${ SERVER_PORT }`)
-})
+});

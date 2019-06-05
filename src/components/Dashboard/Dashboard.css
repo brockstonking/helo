@@ -1,6 +1,7 @@
 .dashboard {
     width: 70%;
-    margin-left: 10%;
+    margin: 0 auto;
+    padding-left: 100px;
 }
 
 .searchIcon {

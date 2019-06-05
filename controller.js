@@ -23,39 +23,49 @@ module.exports = {
         const { user_id } = req.params;
         const sqlSearch = '%' + search + '%'
         const dbInstance = req.app.get('db');
-            if (userposts === 'true' && search) {
-                dbInstance.search_all_posts(sqlSearch)
-                .then( results => {
-                    res.status(200).send(results)
-                })
-                .catch (err => {
-                    res.status(500).send(err)
-                })
-            } else if (userposts === 'false' && search === '') {
-                dbInstance.get_all_not_user(user_id)
-                .then( results => {
-                    res.status(200).send(results)
-                })
-                .catch (err => {
-                    res.status(500).send(err)
-                })
-            } else if (userposts === 'false' && search) {
-                dbInstance.search_not_user([sqlSearch, user_id])
-                .then( results => {
-                    res.status(200).send(results)
-                })
-                .catch (err => {
-                    res.status(500).send(err)
-                })
-            } else if (userposts === 'true' && search === '') {
-                dbInstance.get_posts()
-                .then( results => {
-                    res.status(200).send(results)
-                })
-                .catch (err => {
-                    res.status(500).send(err)
-                })
-            }  
+        if (userposts === 'true' && search) {
+            dbInstance.search_all_posts(sqlSearch)
+            .then( results => {
+                res.status(200).send(results)
+            })
+            .catch (err => {
+                res.status(500).send(err)
+            })
+        } else if (userposts === 'false' && search === '') {
+            dbInstance.get_all_not_user(user_id)
+            .then( results => {
+                res.status(200).send(results)
+            })
+            .catch (err => {
+                res.status(500).send(err)
+            })
+        } else if (userposts === 'false' && search) {
+            dbInstance.search_not_user([sqlSearch, user_id])
+            .then( results => {
+                res.status(200).send(results)
+            })
+            .catch (err => {
+                res.status(500).send(err)
+            })
+        } else if (userposts === 'true' && search === '') {
+            dbInstance.get_posts()
+            .then( results => {
+                res.status(200).send(results)
+            })
+            .catch (err => {
+                res.status(500).send(err)
+            })
+        }  
+    },
+    getSinglePost: async (req, res, next) => {
+        const dbInstance = req.app.get('db');
+        const { postId } = req.params;
+        dbInstance.view_specific_post([postId])
+        .then( results => {
+            res.status(200).send(results)
+        })
+        .catch( err => {
+            res.status(500).send(err)
+        })
     }
-
-    }
+}
