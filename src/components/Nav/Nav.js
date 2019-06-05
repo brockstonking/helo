@@ -2,8 +2,22 @@ import React, { Component } from 'react';
 import { HashRouter as Router, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Nav.css';
+import axios from 'axios';
+import whichUser from './../../ducks/reducer';
 
 class Nav extends Component {
+    constructor(props){
+        super(props);
+
+        this.authMe = this.authMe.bind( this );
+    }
+
+    authMe(){
+        axios.get('/api/auth/me')
+        .then( results => {
+            console.log(results);
+        })
+    }
     render(){
         const image = {
             backgroundImage: `url(${ this.props.profile_picture })`
@@ -15,7 +29,7 @@ class Nav extends Component {
                         <div className='imageProfileDiv' style={ image }>
                             {/* <img className='imageImg' src={ this.props.profile_picture } alt='' /> */}
                         </div>
-                        <div>
+                        <div onClick={ this.authMe }>
                             { this.props.username }
                         </div>
                     </div>
@@ -35,6 +49,10 @@ const mapStateToProps = (state) => {
     return { username: username, profile_picture: profilePicture, id: id }
 }
 
-export default connect(mapStateToProps)(Nav);
+const mapDispatchToProps = {
+    whichUserIsIt: whichUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);
 
 

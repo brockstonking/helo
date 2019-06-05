@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Nav from './../Nav/Nav';
-import { connect } from 'react-redux';
 import axios from 'axios';
 import './Form.css';
 
@@ -39,7 +38,7 @@ class Form extends Component {
     }
 
     async post(){
-        await axios.post(`/posts/create/${ this.props.id }`, { title: this.state.title, image: this.state.imageURL, content: this.state.content })
+        await axios.post(`/posts/create`, { title: this.state.title, image: this.state.imageURL, content: this.state.content })
         .then( results => {
             console.log(results)
         })
@@ -81,9 +80,4 @@ class Form extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    const { username, profilePicture, id } = state;
-    return { username: username, profile_picture: profilePicture, id: id }
-}
-
-export default connect(mapStateToProps)(Form);
+export default Form;

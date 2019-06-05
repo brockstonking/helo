@@ -46,18 +46,17 @@ class Auth extends Component {
     }
 
     login(){
-                axios.post('http://localhost:3001/auth/login', { username: this.state.inputEmail, password: this.state.inputPassword })
-                .then( results => {
-                const { user_id, username, profile_picture } = results.data[0]
-                this.props.whichUserIsIt(user_id, username, profile_picture);
-                this.setState({
-                    inputEmail: '',
-                    inputPassword: ''
-                })
-                this.props.history.push('/dashboard')
-                })
-            
-        
+            axios.post('http://localhost:3001/auth/login', { withCredentials: true, username: this.state.inputEmail, password: this.state.inputPassword })
+            .then( results => {
+            const { user_id, username, profile_picture } = results.data[0]
+            this.props.whichUserIsIt(user_id, username, profile_picture);
+            this.setState({
+                inputEmail: '',
+                inputPassword: ''
+            })
+            console.log(results)
+            this.props.history.push('/dashboard')
+        })
     }
 
     render(){

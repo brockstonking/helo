@@ -20,20 +20,26 @@ massive(CONNECTION_STRING)
   .catch(err => console.log(err));
 
 app.use(express.json());
-
 app.use(
   session({
     secret: SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true,
+    cookie: {
+      secure: false,
+      maxAge: 60000
+    }
   })
 );
 
+
 app.post('/auth/register', controller.register);
 app.post('/auth/login', controller.login);
-app.get('/posts/all/:user_id', controller.getAllPosts);
+app.get('/posts/all', controller.getAllPosts);
 app.get('/posts/:postId', controller.getSinglePost);
-app.post('/posts/create/:userId', controller.createPost);
+app.post('/posts/create', controller.createPost);
+app.post('/api/auth/logout', controller.logout);
+app.get('/api/auth/me', controller.authMe);
 
 
 app.listen(SERVER_PORT, () => {

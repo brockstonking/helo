@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Nav from './../Nav/Nav';
 import './Dashboard.css';
-import { connect } from 'react-redux';
 import axios from 'axios';
 import Post from './Post/DashPost';
 
@@ -43,7 +42,7 @@ class Dashboard extends Component {
     }
 
     async getPosts(){
-        await axios.get(`/posts/all/${ this.props.id }?userposts=${ this.state.checkBox }&search=${ this.state.searchInput }`)
+        await axios.get(`/posts/all?userposts=${ this.state.checkBox }&search=${ this.state.searchInput }`)
         .then( results => {
             this.setState({
                 posts: results.data
@@ -98,9 +97,6 @@ class Dashboard extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    const { username, profilePicture, id } = state;
-    return { username: username, profile_picture: profilePicture, id: id }
-}
 
-export default connect(mapStateToProps)(Dashboard);
+
+export default Dashboard;

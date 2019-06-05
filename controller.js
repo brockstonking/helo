@@ -2,25 +2,34 @@ var bycrypt = require('bcryptjs');
 
 
 module.exports = {
-    register: async (req, res, next) => {
+    register: (req, res, next) => {
+        const { session } = req;
         const dbInstance = req.app.get('db');
         const { username, password } = req.body;
         dbInstance.register_user([username, password, `https://robohash.org/${ username }`])
         .then( results => {
+            session.userid = results[0].user_id;
             res.status(200).send(results)
         })
     },
-    login: async (req, res, next) => {
+    login: (req, res, next) => {
+        const { session } = req;
         const dbInstance = req.app.get('db');
         const { username, password } = req.body;
         dbInstance.login_user([username, password])
         .then( results => {
+            session.userid = results[0].user_id;
             res.status(200).send(results)
+            console.log(session.id)
         })
+        
     },
-    getAllPosts: async (req, res, next) => {
+    logout: (req, res, next) => {
+        req.session.destroy();
+    },
+    getAllPosts: (req, res, next) => {
         const { userposts, search } = req.query;
-        const { user_id } = req.params;
+        const { session } = req;
         const sqlSearch = '%' + search + '%'
         const dbInstance = req.app.get('db');
         if (userposts === 'true' && search) {
@@ -32,7 +41,7 @@ module.exports = {
                 res.status(500).send(err)
             })
         } else if (userposts === 'false' && search === '') {
-            dbInstance.get_all_not_user(user_id)
+            dbInstance.get_all_not_user(session.userid)
             .then( results => {
                 res.status(200).send(results)
             })
@@ -40,7 +49,7 @@ module.exports = {
                 res.status(500).send(err)
             })
         } else if (userposts === 'false' && search) {
-            dbInstance.search_not_user([sqlSearch, user_id])
+            dbInstance.search_not_user([sqlSearch, session.userid])
             .then( results => {
                 res.status(200).send(results)
             })
@@ -57,7 +66,7 @@ module.exports = {
             })
         }  
     },
-    getSinglePost: async (req, res, next) => {
+    getSinglePost: (req, res, next) => {
         const dbInstance = req.app.get('db');
         const { postId } = req.params;
         dbInstance.view_specific_post([postId])
@@ -68,13 +77,22 @@ module.exports = {
             res.status(500).send(err)
         })
     },
-    createPost: async (req, res, next) => {
-        const { userId } = req.params;
+    createPost: (req, res, next) => {
+        const { session } = req;
         const { title, image, content } = req.body;
         const dbInstance = req.app.get('db');
-        dbInstance.create_post([title, image, content, userId])
+        dbInstance.create_post([title, image, content, session.userid])
         .then( () => {
             res.status(200).send('Post has been added.')
+        })
+    },
+    authMe: (req, res, next) => {
+        const { session } = req;
+        const dbInstance = req.app.get('db');
+        dbInstance.get_user([session.userid])
+        .then( results => {
+            res.status(200).send(results)
+            console.log(session.id)
         })
     }
 }
