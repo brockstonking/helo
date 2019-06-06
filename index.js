@@ -20,18 +20,17 @@ massive(CONNECTION_STRING)
   .catch(err => console.log(err));
 
 app.use(express.json());
-app.use(
-  session({
-    secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      secure: false,
-      maxAge: 60000
-    }
-  })
-);
 
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 }
+}))
+
+app.use( (req, res, next) => {
+  next();
+})
 
 app.post('/auth/register', controller.register);
 app.post('/auth/login', controller.login);

@@ -13,16 +13,14 @@ module.exports = {
         })
     },
     login: (req, res, next) => {
-        const { session } = req;
         const dbInstance = req.app.get('db');
         const { username, password } = req.body;
         dbInstance.login_user([username, password])
         .then( results => {
-            session.userid = results[0].user_id;
+            req.session.userid = results[0].user_id;
             res.status(200).send(results)
-            console.log(session.id)
+            console.log(req.session.id)
         })
-        
     },
     logout: (req, res, next) => {
         req.session.destroy();
