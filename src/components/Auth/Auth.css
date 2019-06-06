@@ -5,10 +5,11 @@
     background: linear-gradient(to right, #FF70A6 0%, #FF9770 33%, #FFD670 66%, #E9FF70 100%);
     color: white;
     font-size: 17px;
+    position: fixed;
+    top: 0;
 }
 
 .loginRegisterBox {
-    height: 45vh;
     width: 30vw;
     margin: auto;
     background: linear-gradient(to right, #ff7d6d 0%, #ffd270 100%);

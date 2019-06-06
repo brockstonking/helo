@@ -37,12 +37,11 @@ class Form extends Component {
         })
     }
 
-    async post(){
-        await axios.post(`/posts/create`, { title: this.state.title, image: this.state.imageURL, content: this.state.content })
+    post(){
+        axios.post(`/posts/create`, { title: this.state.title, image: this.state.imageURL, content: this.state.content })
         .then( results => {
-            console.log(results)
-        })
         this.props.history.push('/Dashboard')
+        })
     }
 
     render(){

@@ -25,7 +25,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 1200000 }
 }))
 
 app.use( (req, res, next) => {

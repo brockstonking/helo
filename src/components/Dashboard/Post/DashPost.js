@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './DashPost.css';
-import { HashRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Post extends Component {
     constructor(props){
@@ -9,7 +9,6 @@ class Post extends Component {
 
     render(){
         return (
-            <Router>
                 <Link to={`/post/${ this.props.postId }`} className='links' >
                     <div className='postDisplay'>
                         <div className='theInside'>
@@ -21,7 +20,6 @@ class Post extends Component {
                         </div>
                     </div>
                 </Link>
-            </Router>
         )
     }
 }

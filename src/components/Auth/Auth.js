@@ -32,7 +32,7 @@ class Auth extends Component {
     }
 
     register(){
-        axios.post('http://localhost:3001/auth/register', { username: this.state.inputEmail, password: this.state.inputPassword })
+        axios.post('/auth/register', { username: this.state.inputEmail, password: this.state.inputPassword })
         .then( results => {
             const { user_id, username, profile_picture } = results.data[0]
             this.props.whichUserIsIt(user_id, username, profile_picture);
@@ -46,7 +46,7 @@ class Auth extends Component {
     }
 
     login(){
-            axios.post('http://localhost:3001/auth/login', { withCredentials: true, username: this.state.inputEmail, password: this.state.inputPassword })
+            axios.post('/auth/login', { withCredentials: true, username: this.state.inputEmail, password: this.state.inputPassword })
             .then( results => {
             const { user_id, username, profile_picture } = results.data[0]
             this.props.whichUserIsIt(user_id, username, profile_picture);
@@ -54,7 +54,6 @@ class Auth extends Component {
                 inputEmail: '',
                 inputPassword: ''
             })
-            console.log(results)
             this.props.history.push('/dashboard')
         })
     }

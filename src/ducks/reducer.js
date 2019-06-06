@@ -7,7 +7,7 @@ let initialState = {
 
 const DEFINE_USER = 'DEFINE_USER'
 
-export const whichUser = (id, username, profilePicture) => {
+export const whichUser = (username, profilePicture) => {
     return {
         type: 'DEFINE_USER',
         payload: {

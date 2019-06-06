@@ -90,7 +90,6 @@ module.exports = {
         dbInstance.get_user([session.userid])
         .then( results => {
             res.status(200).send(results)
-            console.log(session.id)
         })
     }
 }
