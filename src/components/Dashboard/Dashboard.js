@@ -41,8 +41,8 @@ class Dashboard extends Component {
         console.log(this.state.posts)
     }
 
-    async getPosts(){
-        await axios.get(`/posts/all?userposts=${ this.state.checkBox }&search=${ this.state.searchInput }`)
+    getPosts(){
+        axios.get(`/posts/all?userposts=${ this.state.checkBox }&search=${ this.state.searchInput }`)
         .then( results => {
             this.setState({
                 posts: results.data
